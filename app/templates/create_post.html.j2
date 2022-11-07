@@ -1,0 +1,7 @@
+{% extends 'base.html.j2' %}
+
+{% block content %}
+<form enctype = "multipart/form-data" action = "../blueprints/main/routes.py" method = "post">   
+<p>Upload File: <input type = "file" name = "filename" /></p>
+</form>
+{% endblock %}

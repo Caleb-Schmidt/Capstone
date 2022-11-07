@@ -1,0 +1,44 @@
+    <ul class="nav flex-column nav-pills">
+        <li class="nav-item" id='home'>
+            {% if home %}
+            <a class="nav-link active" href="{{url_for('index')}}">Home</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('index')}}">Home</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if events %}
+            <a class="nav-link active" href="{{url_for('main.events')}}">Events</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('main.events')}}">Events</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if music %}
+            <a class="nav-link active" href="{{url_for('main.music')}}">Music</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('main.music')}}">Music</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if devotions %}
+            <a class="nav-link active" href="{{url_for('main.devotions')}}">Devotions</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('main.devotions')}}">Devotions</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if messages %}
+            <a class="nav-link active" href="{{url_for('main.messages')}}">Messages</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('main.messages')}}">Messages</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if profile %}
+            <a class="nav-link active" href="{{url_for('main.profile')}}">Profile</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('main.profile')}}">Profile</a>
+            {% endif %}
+        </li>
+    </ul>
