@@ -1,4 +1,4 @@
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs" id="top-nav">
   <li class="nav-item" id='home'>
             {% if home %}
             <a class="nav-link active" href="{{url_for('index')}}">Home</a>
@@ -28,7 +28,7 @@
             {% endif %}
         </li>
         <li class="nav-item">
-            {% if messages %}
+            {% if message %}
             <a class="nav-link active" href="{{url_for('main.messages')}}">Messages</a>
             {% else %}
             <a class="nav-link" href="{{url_for('main.messages')}}">Messages</a>
@@ -41,7 +41,42 @@
             <a class="nav-link" href="{{url_for('main.profile')}}">Profile</a>
             {% endif %}
         </li>
+        {% if current_user.is_anonymous %}
+        <li class="nav-item">
+            {% if login %}
+            <a class="nav-link active" href="{{url_for('auth.login')}}">Login</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('auth.login')}}">Login</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if register %}
+            <a class="nav-link active" href="{{url_for('auth.register')}}">Register</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('auth.register')}}">Register</a>
+            {% endif %}
+        </li>
+        {% else %}
+        <li class="nav-item">
+            {% if edit %}
+            <a class="nav-link active" href="{{url_for('auth.edit_profile')}}">Edit Profile</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('auth.edit_profile')}}">Edit Profile</a>
+            {% endif %}
+        </li>
+        <li class="nav-item">
+            {% if logout %}
+            <a class="nav-link active" href="{{url_for('auth.logout')}}">Logout</a>
+            {% else %}
+            <a class="nav-link" href="{{url_for('auth.logout')}}">Logout</a>
+            {% endif %}
+        </li>
+        {% endif %}
 </ul>
+
+{# <a href="{{url_for('main.events')}}">Events</a>
+<a href="{{url_for('main.events')}}">Events</a> #}
+
 
 {# <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Dropdown</a>

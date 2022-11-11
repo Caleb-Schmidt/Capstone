@@ -2,8 +2,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
-class MessageForm(FlaskForm):
-    title = StringField('Subject',validators=[DataRequired()])
+class PostForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired()])
+    img = StringField('Image URL')
     body = StringField('Message',validators=[DataRequired()])
-    author = StringField('Your Name',validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class EditPostForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired()])
+    img = StringField('Image URL')
+    body = StringField('Message',validators=[DataRequired()])
     submit = SubmitField('Submit')

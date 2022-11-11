@@ -1,40 +1,35 @@
 {% extends './base.html.j2' %}
 {% block content %}
-    <main>
-        <div class="row fixed-container">
-            <div class="col-3" id="left">
-                {% include './includes/nav.html.j2' %}
+    <div id="body">
+        <header class="fixed-container col-3" id="left">
+            {% include './includes/nav.html.j2' %}
+        </header>
+        <main class="container col-6" id="middle">
+            {% for post in posts %}
+            {% if post.img %}
+            <div class="card">
+                <img src="{{post.img}}" class="card-img-top" alt="image">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.body}}</p>
+                    <a class="card-link" href="{{url_for('main.edit_post', id=post.id)}}"><button class="btn btn-primary">Edit Post</button></a>
+                    <a class="card-link" href="{{url_for('main.pending', id=post.id)}}"><button class="btn btn-primary">Delete Post</button></a>
+                </div>
             </div>
-            <div class="col-3 offset-6" id="right">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam dolores incidunt architecto, autem ab ducimus a repellat blanditiis sapiente sequi quae soluta voluptatibus explicabo rem culpa dolorum deserunt qui temporibus.</p>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt hic dicta nesciunt perferendis dignissimos suscipit! Illo corrupti, facilis voluptatum minima laborum quidem illum quae! Qui recusandae inventore doloribus odit magni.</p>
+            {% else %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{post.title}}</h5>
+                    <p class="card-text">{{post.body}}</p>
+                    <a class="card-link" href="{{url_for('main.edit_post', id=post.id)}}"><button class="btn btn-primary">Edit Post</button></a>
+                    <a class="card-link" href="{{url_for('main.pending', id=post.id)}}"><button class="btn btn-primary">Delete Post</button></a>
+                </div>
             </div>
-        </div>
-        <div class="col-6 offset-3 row" id="middle">
-            <h1>Home</h1>
-            <form enctype = "multipart/form-data" action = "../__init__.py" method = "post">   
-            <p>Upload File: <input type = "file" name = "filename" /></p>
-            </form>
-            <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. At quod quaerat maxime dignissimos ipsam architecto distinctio in aut, praesentium laudantium, ut nam consequatur accusantium eaque alias illum iste voluptatibus error.
-            In earum aspernatur necessitatibus neque voluptatem quisquam mollitia maxime rem at odit architecto possimus impedit magni recusandae dolorem sint fugit quibusdam provident, distinctio repudiandae ab. Reiciendis asperiores maxime porro pariatur!
-            Molestiae quae praesentium omnis doloribus, veniam a saepe est natus, magnam repellat, at aspernatur vel aperiam maxime in error voluptatem rerum beatae fuga sunt cumque nostrum dignissimos molestias? Voluptates, animi.
-            Repellendus fuga dolore alias odit ipsum ab porro quam id rerum ad magni repudiandae iure, rem, ipsam sint at explicabo adipisci dolorum labore iste necessitatibus ullam nulla. Dolorum, molestias. Saepe!
-            Illum numquam deleniti modi accusantium, sequi iusto laborum nesciunt tempore iste unde sed. Repellendus veniam quos, architecto rem quidem quae sapiente repudiandae, sequi itaque, vitae animi saepe assumenda hic? Eligendi.
-            Inventore porro, sed veritatis officia est quo quod natus nam fugiat nisi aut asperiores veniam accusamus! Laboriosam minus, commodi et eos architecto dicta sequi placeat officiis officia, hic molestias nemo!
-            Similique nemo blanditiis, libero dolorem hic neque commodi cumque ex, molestias voluptas tempore ea odio distinctio aut illo incidunt sunt quos. Earum odio ducimus odit quas sint consequuntur accusantium iure.
-            Rerum natus numquam placeat architecto, repudiandae voluptatum quaerat. Harum quidem exercitationem impedit veritatis nesciunt quibusdam! Quisquam deleniti ducimus illo rem fuga dignissimos, aperiam doloremque sint quis sed veritatis, omnis placeat?
-            Natus eveniet eos qui architecto cupiditate quod quibusdam pariatur. Voluptates laudantium suscipit cumque libero sequi modi nostrum dolor, minima unde, reiciendis quasi praesentium temporibus molestias quidem earum, illo qui at!
-            Vel minima commodi rerum voluptatum, consequatur nemo, laborum eius atque perferendis unde soluta nihil ullam. Ratione tempora quam deserunt, iusto laboriosam nam commodi vitae explicabo nisi inventore. Totam, quo laudantium.
-            Mollitia officiis totam iste. Consequatur a ex, corrupti ipsa voluptatibus distinctio nesciunt, sit rem doloribus officiis maxime perferendis aperiam harum repudiandae, labore cupiditate nulla. Nisi, tempore. Corrupti numquam laudantium quia!
-            Error veniam cum eveniet inventore ullam dolor a eaque repellat corrupti ut vel, pariatur assumenda maxime. Explicabo, aperiam. Asperiores quaerat culpa animi eos doloremque quibusdam fugiat numquam ipsa necessitatibus quae?
-            Eaque quis nisi necessitatibus error porro. Temporibus in delectus vel inventore voluptatem dolorem doloribus. Excepturi, maiores voluptas rem, cupiditate sunt alias aliquid ea pariatur, id ipsum placeat eum esse eos?
-            Numquam consectetur dicta, atque, modi qui magni ipsa cum vel architecto ipsam harum ab commodi eos officia quo quia perferendis. Voluptatum laborum molestias nobis autem dolores sapiente inventore consequatur excepturi.
-            Quas, nihil? Distinctio labore id culpa sunt perferendis veritatis ullam maxime non doloribus blanditiis amet ratione, dolor consequatur ducimus dolorem cum illo reiciendis enim deserunt. Veniam illo culpa excepturi cumque.
-            Voluptatibus vero aut, omnis assumenda perspiciatis, rerum ea tenetur excepturi quas quis temporibus dolore fugit maiores earum explicabo accusamus voluptatum animi molestiae cupiditate. Error et minima voluptas, quam consectetur cumque?
-            Qui quod sequi possimus quibusdam accusantium consequatur exercitationem cumque? Itaque praesentium modi pariatur alias odit aut tenetur consectetur vero blanditiis ratione? Dolores impedit, sapiente quae explicabo praesentium consequuntur asperiores sed!
-            Veniam laudantium magni minima, nobis beatae esse, ipsum, quas exercitationem quasi doloremque quaerat recusandae aut culpa doloribus veritatis debitis dolore ab? Rem neque facere soluta fugiat at debitis corrupti pariatur?
-            Suscipit explicabo laudantium culpa unde iure magni natus vitae perferendis inventore blanditiis quam, doloribus aliquam similique accusamus ratione tenetur repudiandae provident odit reiciendis. Quam, quo quidem! Id perferendis porro laborum?
-            Possimus quaerat nam esse dignissimos voluptates eum. Quia iure expedita tempore corporis dicta eos totam saepe at impedit. Ipsa reprehenderit esse ullam non ducimus inventore amet consequuntur sapiente eaque necessitatibus.</p>
-        </div>
-    </main>
+            {% endif %}
+            {% endfor %}
+        </main>
+        <footer class="fixed-container col-3 offset-9 " id="right">
+            {% include './includes/nav2.html.j2' %}
+        </footer>
+    </div>
 {% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html.j2' %}
+
+{% block content %}
+    <div class="col-6 offset-3" id="delete-post">
+        <h1>Delete Post?</h1>
+        <a href="{{url_for('main.delete_post', id=post.id)}}"><button class="btn btn-primary">Delete</button></a>
+        <a href="{{url_for('index')}}"><button class="btn btn-primary">Back</button></a>
+    </div>
+{% endblock %}

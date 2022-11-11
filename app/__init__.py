@@ -20,33 +20,24 @@ def create_app(config_class=Config):
     app.config.from_object(Config)
     db.init_app(app)
     migrate.init_app(app, db)
+    login.init_app(app)
     moment.init_app(app)
 
     from .blueprints.main import bp as main_bp
     app.register_blueprint(main_bp)
 
+    from .blueprints.auth import bp as auth_bp
+    app.register_blueprint(auth_bp)
+
     @app.route('/', methods=['GET', 'POST'])
     def index():
         home = 'Hello'
-        return render_template('index.html.j2', home=home)
-
-    app.config["DEBUG"] = True
-
-    # Upload folder
-    UPLOAD_FOLDER = 'static/files'
-    app.config['UPLOAD_FOLDER'] =  UPLOAD_FOLDER
-
-    # Get the uploaded files
-    @app.route("/", methods=['POST'])
-    def uploadFiles():
-        # get the uploaded file
-        uploaded_file = request.files['file']
-        if uploaded_file.filename != '':
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], uploaded_file.filename)
-            # set the file path
-            uploaded_file.save(file_path)
-            # save the file
-        return redirect(url_for('index'))
+        posts = Post.query.all()
+        posts = sorted(posts, key=lambda x: x.created_on, reverse=True)
+        return render_template('index.html.j2', home=home, posts=posts)
 
 
     return app
+
+from app import models
+from .models import Post
