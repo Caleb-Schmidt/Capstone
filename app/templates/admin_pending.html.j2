@@ -1,0 +1,18 @@
+{% extends 'base.html.j2' %}
+
+{% block content %}
+    {% if admin %}
+    <div class="col-6 offset-3" id="delete-post">
+        <h1>Make Person Admin?</h1>
+        <a href="{{url_for('main.assign_admin', id=post.id)}}"><button class="btn btn-primary">Delete</button></a>
+        <a href="{{url_for('index')}}"><button class="btn btn-primary">Back</button></a>
+    </div>
+    {% endif %}
+    {% if user %}
+    <div class="col-6 offset-3" id="delete-post">
+        <h1>Make Person User?</h1>
+        <a href="{{url_for('main.assign_user', id=post.id)}}"><button class="btn btn-primary">Delete</button></a>
+        <a href="{{url_for('index')}}"><button class="btn btn-primary">Back</button></a>
+    </div>
+    {% endif %}
+{% endblock %}

@@ -32,7 +32,6 @@ def register():
         new_user_data = {
             "first_name" : form.first_name.data.title(),
             "last_name" : form.last_name.data.title(),
-            "username" : form.username.data,
             "email": form.email.data.lower(),
             "password" : form.password.data,
         }
@@ -58,7 +57,6 @@ def edit_profile():
         edited_user_data = {
             "first_name" : form.first_name.data.title(),
             "last_name" : form.last_name.data.title(),
-            "username" : form.username.data,
             "email": form.email.data.lower(),
             "password":form.password.data,
         }

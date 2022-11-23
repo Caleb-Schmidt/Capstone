@@ -8,11 +8,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 class User(db.Model, UserMixin):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, unique=True, index=True)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
     email = db.Column(db.String, unique=True, index=True)
     password = db.Column(db.String)
     created_on = db.Column(db.DateTime, default=dt.utcnow)
     token = db.Column(db.Integer, unique=True, index=True)
+    is_admin = db.Column(db.Boolean, default=False)
 
     def get_token(self, exp=86400):
         current_time = dt.utcnow()
@@ -30,7 +32,8 @@ class User(db.Model, UserMixin):
         db.session.commit()
     
     def from_dict(self, data):
-        self.username = data['username']
+        self.first_name = data['first_name']
+        self.last_name = data['last_name']
         self.email= data['email']
         self.password = self.hash_password(data['password'])
 
@@ -40,9 +43,16 @@ class User(db.Model, UserMixin):
     def check_hashed_password(self, login_password):
         return check_password_hash(self.password, login_password)
 
-    def delete(self, id):
-        user = User.query.get(id)
-        db.session.delete(user)
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def make_admin(self):
+        self.is_admin = True
+        db.session.commit()
+
+    def remove_admin(self):
+        self.is_admin = False
         db.session.commit()
     
 @login.user_loader

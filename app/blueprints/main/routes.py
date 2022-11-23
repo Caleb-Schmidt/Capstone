@@ -5,7 +5,8 @@ from flask_login import current_user, login_required
 from config import Config
 import os
 from .forms import PostForm, EditPostForm
-from app.models import Post
+from app.models import Post, User
+
 
 @main.route('/events', methods=['GET', 'POST'])
 def events():
@@ -33,7 +34,6 @@ def profile():
     return render_template('profile.html.j2', profile=profile)
 
 @main.route('/create_post', methods=['GET', 'POST'])
-@login_required
 def create_post():
     form = PostForm()
     if request.method == 'POST' and form.validate_on_submit():
@@ -67,3 +67,46 @@ def delete_post(id):
 def pending(id):
     post = Post.query.get(id)
     return render_template('pending.html.j2', post=post)
+
+@main.route('/admins', methods=['GET', 'POST'])
+def show_admins():
+    users = User.query.all()
+    sorted_users = sorted(users, key=lambda x: x.last_name)
+    return render_template('admins.html.j2', users=sorted_users)
+
+# @main.route('/admins_update<int:id>', methods=['GET', 'POST'])
+# def admin_status(id):
+#     user = User.query.get(id)
+#     if not user.is_admin:
+#         user.make_admin()
+#     else:
+#         user.remove_admin()
+#     users = User.query.all()
+#     return render_template('admins.html.j2', users=users)
+
+@main.route('/assign_admin<int:id>', methods=['GET', 'POST'])
+def assign_admin(id):
+    admin = User.query.get(id)
+    admin.make_admin()
+    users = User.query.all()
+    return render_template('admins.html.j2', users=users)
+
+@main.route('/assign_user<int:id>', methods=['GET', 'POST'])
+def assign_user(id):
+    user = User.query.get(id)
+    user.remove_admin()
+    users = User.query.all()
+    return render_template('admins.html.j2', users=users)
+
+@main.route('/admin_pending<int:id>', methods=['GET', 'POST'])
+def admin_pending(id):
+    user = User.query.get(id)
+    full_name = user.first_name + user.last_name
+    pass
+
+@main.route('/delete_user/<int:id>', methods=['GET', 'POST'])
+def delete_user(id):
+    user = User.query.get(id)
+    user.delete()
+    users = User.query.all()
+    return render_template('admins.html.j2', users=users)

@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST" action="{{url_for('main.edit_post', id=post.id)}}" class="mb-5">
+    <form method="POST" action="{{url_for('main.edit_post', id=post.id) if current_user.is_authenticated else url_for('auth.register')}}" class="mb-5">
         <div class="mb-1">
             <textarea class="form-control"
                 name="body"

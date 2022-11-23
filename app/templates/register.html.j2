@@ -44,14 +44,6 @@
                 {% endfor %}
             </div>
             <div class="mb-3">
-                {{ form.username.label(class="form-label") }}
-                {{ form.username(class="form-control", value = current_user.username) }}
-
-                {% for error in form.username.errors %}
-                    <small style="color:red;">{{ error }}</small>
-                {% endfor %}
-            </div>
-            <div class="mb-3">
                 {{ form.password.label(class="form-label") }}
                 {{ form.password(class="form-control") }}
                 {% for error in form.password.errors %}
