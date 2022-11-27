@@ -90,3 +90,36 @@ class Post(db.Model):
     def delete(self):
         db.session.delete(self)
         db.session.commit()
+
+
+class Event(db.Model):
+    __tablename__ = 'event'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String)
+    img = db.Column(db.String)
+    body = db.Column(db.String(500))
+    created_on = db.Column(db.DateTime, default=dt.utcnow)
+    date_modified = db.Column(db.DateTime, onupdate=dt.utcnow)
+
+    def __repr__(self):
+        return f'<Event: {self.id} | {self.body[:15]}>'
+
+    def edit(self, new_body):
+        self.body = new_body
+
+    def to_dict(self):
+        return{
+            'id':self.id,
+            'body':self.body,
+            'created_on':self.created_on,
+            'date_modified':self.date_modified,
+        }
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+    
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()

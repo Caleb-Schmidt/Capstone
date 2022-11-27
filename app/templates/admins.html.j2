@@ -20,17 +20,17 @@
                     {% if user.is_admin %}
                     <td>Admin</td>
                     <form action="{{url_for('main.assign_user', id=user.id)}}">
-                    <td><button class="btn btn-primary">Make User</button></td>
-                    <td></td>
+                        <td><button class="btn btn-primary">Make User</button></td>
+                        <td></td>
                     </form>
                     {% else %}
-                    <td>User</td>
-                    <form action="{{url_for('main.assign_admin', id=user.id)}}">
-                    <td><button class="btn btn-primary">Make Admin</button></td>
-                    </form>
-                    <form action="{{url_for('main.delete_user', id=user.id)}}">
-                    <td><button class='btn btn-danger'>Delete User</button></td>
-                    </form>
+                        <td>User</td>
+                        <form action="{{url_for('main.assign_admin', id=user.id)}}">
+                            <td><button class="btn btn-primary">Make Admin</button></td>
+                        </form>
+                        <form action="{{url_for('main.admin_pending', id=user.id)}}">
+                            <td><button class='btn btn-danger'>Delete User</button></td>
+                        </form>
                     {% endif %}
                 </tr>
                 {% endfor %}

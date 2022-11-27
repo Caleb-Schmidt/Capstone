@@ -13,3 +13,16 @@ class EditPostForm(FlaskForm):
     img = StringField('Image URL')
     body = StringField('Message',validators=[DataRequired()])
     submit = SubmitField('Submit')
+
+class EventForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired()])
+    img = StringField('Image URL')
+    body = StringField('Message',validators=[DataRequired()])
+    submit = SubmitField('Submit')
+
+class EditEventForm(FlaskForm):
+    title = StringField('Title',validators=[DataRequired()])
+    img = StringField('Image URL')
+    body = StringField('Message',validators=[DataRequired()])
+    submit = SubmitField('Submit')
+

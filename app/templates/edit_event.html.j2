@@ -1,0 +1,18 @@
+{% extends './base.html.j2' %}
+
+{% block title %}
+    Edit Post
+{% endblock %}
+
+{% block content %}
+    <form method="POST" action="{{url_for('main.edit_event', id=event.id) if current_user.is_authenticated else url_for('auth.register')}}" class="mb-5">
+        <div class="mb-1">
+            <textarea class="form-control"
+                name="body"
+                style="height: 100px"
+                placeholder = "Message Here"
+            >{{event.body}}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Edit</button>
+    </form>
+{% endblock %}

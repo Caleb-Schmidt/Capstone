@@ -1,0 +1,9 @@
+{% extends './base.html.j2' %}
+
+{% block content %}
+<div class="col-6 offset-3" id="delete-post">
+    <h2>What kind of post are you making?</h2>
+    <a href="{{url_for('main.create_post')}}"><button class="btn btn-primary" >Normal</button></a>
+    <a href="{{url_for('main.create_event')}}"><button class="btn btn-primary" >Event</button></a> 
+</div>
+{% endblock %}

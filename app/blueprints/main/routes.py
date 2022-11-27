@@ -4,13 +4,19 @@ import requests
 from flask_login import current_user, login_required
 from config import Config
 import os
-from .forms import PostForm, EditPostForm
-from app.models import Post, User
+from .forms import PostForm, EditPostForm, EventForm, EditEventForm
+from app.models import Post, User, Event
 
+###########################
+#
+#   All Web Page Loadups
+#
+###########################
 
 @main.route('/events', methods=['GET', 'POST'])
 def events():
-    events='hello'
+    events = Event.query.all()
+    events = sorted(events, key=lambda x: x.date_modified, reverse=True)
     return render_template('events.html.j2', events=events)
 
 @main.route('/music', methods=['GET', 'POST'])
@@ -32,6 +38,16 @@ def messages():
 def profile():
     profile='hello'
     return render_template('profile.html.j2', profile=profile)
+
+@main.route('/selection', methods=['GET', 'POST'])
+def selection():
+    return render_template('selection.html.j2')
+
+###########################
+#
+#   Post CRUD routes
+#
+###########################
 
 @main.route('/create_post', methods=['GET', 'POST'])
 def create_post():
@@ -68,21 +84,58 @@ def pending(id):
     post = Post.query.get(id)
     return render_template('pending.html.j2', post=post)
 
+###########################
+#
+#   Event CRUD routes
+#
+###########################
+
+@main.route('/create_event', methods=['GET', 'POST'])
+def create_event():
+    form = EventForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        title = form.title.data
+        img = form.img.data
+        body = form.body.data
+        new_event = Event(title=title, img=img, body=body)
+        new_event.save()
+        flash('Post Created','success')
+        return redirect(url_for('main.events'))
+    return render_template('create_event.html.j2', form=form)
+
+@main.route('/edit_event<int:id>', methods=['GET', 'POST'])
+def edit_event(id):
+    event = Event.query.get(id)
+    if request.method == 'POST':
+        event.edit(request.form.get('body'))
+        event.save()
+        flash('Post has been edited', 'success')
+
+        return redirect(url_for('main.events'))
+    return render_template('edit_event.html.j2', event=event)
+
+@main.route('/delete_event<int:id>', methods=['GET', 'POST'])
+def delete_event(id):
+    event = Event.query.get(id)
+    event.delete()
+    return redirect(url_for('main.events'))
+
+@main.route('/event_pending/<int:id>', methods=['GET', 'POST'])
+def event_pending(id):
+    event = Event.query.get(id)
+    return render_template('pending.html.j2', event=event)
+
+###########################
+#
+#   All Users page routes
+#
+###########################
+
 @main.route('/admins', methods=['GET', 'POST'])
 def show_admins():
     users = User.query.all()
     sorted_users = sorted(users, key=lambda x: x.last_name)
     return render_template('admins.html.j2', users=sorted_users)
-
-# @main.route('/admins_update<int:id>', methods=['GET', 'POST'])
-# def admin_status(id):
-#     user = User.query.get(id)
-#     if not user.is_admin:
-#         user.make_admin()
-#     else:
-#         user.remove_admin()
-#     users = User.query.all()
-#     return render_template('admins.html.j2', users=users)
 
 @main.route('/assign_admin<int:id>', methods=['GET', 'POST'])
 def assign_admin(id):
@@ -101,8 +154,7 @@ def assign_user(id):
 @main.route('/admin_pending<int:id>', methods=['GET', 'POST'])
 def admin_pending(id):
     user = User.query.get(id)
-    full_name = user.first_name + user.last_name
-    pass
+    return render_template('pending.html.j2', user=user)
 
 @main.route('/delete_user/<int:id>', methods=['GET', 'POST'])
 def delete_user(id):

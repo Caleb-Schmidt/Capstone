@@ -6,7 +6,28 @@
         </header>
         <main class="container col-6" id="middle">
             <h1>Events</h1>
-            <p>Coming Soon</p>
+            {% for event in events %}
+            {% if event.img %}
+            <div class="card">
+                <img src="{{event.img}}" class="card-img-top" alt="image">
+                <div class="card-body">
+                    <h5 class="card-title">{{event.title}}</h5>
+                    <p class="card-text">{{event.body}}</p>
+                    <a class="card-link" href="{{url_for('main.edit_event', id=event.id)}}"><button class="btn btn-primary">Edit Event</button></a>
+                    <a class="card-link" href="{{url_for('main.event_pending', id=event.id)}}"><button class="btn btn-primary">Delete Event</button></a>
+                </div>
+            </div>
+            {% else %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{event.title}}</h5>
+                    <p class="card-text">{{event.body}}</p>
+                    <a class="card-link" href="{{url_for('main.edit_event', id=event.id)}}"><button class="btn btn-primary">Edit Event</button></a>
+                    <a class="card-link" href="{{url_for('main.event_pending', id=event.id)}}"><button class="btn btn-primary">Delete Event</button></a>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
         </main>
         <footer class="fixed-container col-3 offset-9 " id="right">
             {% include './includes/nav2.html.j2' %}

@@ -1,0 +1,42 @@
+{% extends './base.html.j2' %}
+
+{% block title %}
+    Create Event
+{% endblock %}
+
+{% block content %}
+    <div class="col-6 offset-3">
+        <h1>Create Event</h1>
+        <form action="{{ url_for('main.create_event') if current_user.is_authenticated else  url_for('auth.register')  }}" method="POST">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(class="form-control", value = current_user.title) }}
+
+                {% for error in form.title.errors %}
+                    <small style="color:red;">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.img.label(class="form-label") }}
+                {{ form.img(class="form-control", value = current_user.img) }}
+
+                {% for error in form.img.errors %}
+                    <small style="color:red;">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div class="mb-3">
+                {{ form.body.label(class="form-label") }}
+                {{ form.body(class="form-control", value = current_user.body) }}
+
+                {% for error in form.body.errors %}
+                    <small style="color:red;">{{ error }}</small>
+                {% endfor %}
+            </div>
+            <div>
+                {{ form.submit(class="btn btn-primary") }}
+
+            </div>
+        </form>
+    </div>
+{% endblock %}
